@@ -18,12 +18,14 @@ namespace Tools
             [Tooltip("The pool of instantated objects"), SerializeField]
             private readonly List<T> pool = new List<T>();
             public List<T> Pool { get => pool; }
+            private Transform objectsParent;
 
-
-            internal ObjectPool(string name = "", GameObject prefab = null)
+            internal ObjectPool(string name = "", GameObject prefab = null, Transform parent = null)
             {
                 this.name = name;
                 this.prefab = prefab;
+                objectsParent = new GameObject(name: Name).transform;
+                objectsParent.SetParent(parent);
             }
 
             /// <summary>
@@ -31,13 +33,13 @@ namespace Tools
             /// </summary>
             /// <param name="position">Position of the object</param>
             /// <param name="rotation">Rotation of the object</param>
-            public T Get(Vector3 position = default(Vector3), Quaternion rotation = default(Quaternion), Transform parent = null)
+            public T Get(Vector3 position = default(Vector3), Quaternion rotation = default(Quaternion))
             {
                 for (int i = 0; i < pool.Count; i++)
                 {
                     if (!pool[i].gameObject.activeInHierarchy)
                     {
-                        pool[i].transform.SetParent(parent);
+                        //pool[i].transform.SetParent(parent);
                         pool[i].transform.position = position;
                         pool[i].transform.rotation = rotation;
                         pool[i].gameObject.SetActive(true);
@@ -45,8 +47,8 @@ namespace Tools
                     }
                 }
 
-                pool.Add(Instantiate(prefab, position, rotation).GetComponent<T>());
-                pool[pool.Count - 1].transform.SetParent(parent);
+                pool.Add(Instantiate(prefab, position, rotation, parent: objectsParent).GetComponent<T>());
+                //pool[pool.Count - 1].transform.SetParent(parent);
                 return pool[pool.Count - 1];
             }
 
@@ -84,7 +86,7 @@ namespace Tools
             {
                 for (int i = 0; i < count; i++)
                 {
-                    pool.Add(Instantiate(prefab).GetComponent<T>());
+                    pool.Add(Instantiate(prefab,parent: objectsParent).GetComponent<T>());
                     pool[pool.Count - 1].gameObject.SetActive(false);
                 }
             }

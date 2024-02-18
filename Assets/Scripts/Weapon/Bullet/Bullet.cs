@@ -8,6 +8,7 @@ namespace MyGame.Weapon
     public abstract class Bullet: MonoBehaviour
     {
         [SerializeField] private Collider _collider;
+        [SerializeField] private LayerMask _enemyLayerMask;
         protected BulletTrajectory _trajectory;
         [SerializeField] protected float _bulletSpeed;
         public float BulletSpeed { get => _bulletSpeed; }
@@ -52,10 +53,11 @@ namespace MyGame.Weapon
         protected virtual void OnTriggerEnter(Collider other)
         {
             gameObject.SetActive(false);
-            if (other.CompareTag("Player"))
+            if ((_enemyLayerMask.value & (1 << other.gameObject.layer)) > 0)
             {
-                Physics.IgnoreCollision(_collider, other);
+                Debug.Log("Hit enemy");
             }
+            
         }
 
         private void OnDisable()
