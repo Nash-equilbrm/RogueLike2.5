@@ -35,21 +35,37 @@ namespace Tools
             /// <param name="rotation">Rotation of the object</param>
             public T Get(Vector3 position = default(Vector3), Quaternion rotation = default(Quaternion))
             {
-                for (int i = 0; i < pool.Count; i++)
-                {
-                    if (!pool[i].gameObject.activeInHierarchy)
-                    {
-                        //pool[i].transform.SetParent(parent);
-                        pool[i].transform.position = position;
-                        pool[i].transform.rotation = rotation;
-                        pool[i].gameObject.SetActive(true);
-                        return pool[i];
-                    }
-                }
+                //for (int i = 0; i < pool.Count; i++)
+                //{
+                //    if (!pool[i].gameObject.activeSelf)
+                //    {
+                //        pool[i].transform.position = position;
+                //        pool[i].transform.rotation = rotation;
+                //        pool[i].gameObject.SetActive(true);
+                //        var obj = pool[i];
+                //        pool.RemoveAt(i);
+                //        pool.Add(obj);
+                //        return obj;
+                //    }
+                //}
 
-                pool.Add(Instantiate(prefab, position, rotation, parent: objectsParent).GetComponent<T>());
-                //pool[pool.Count - 1].transform.SetParent(parent);
-                return pool[pool.Count - 1];
+                //pool.Add(Instantiate(prefab, position, rotation, parent: objectsParent).GetComponent<T>());
+                //return pool[pool.Count - 1];
+                if (!pool[0].gameObject.activeSelf)
+                {
+                    var obj = pool[0];
+                    pool.Remove(pool[0]);
+                    pool.Add(obj);
+                    obj.transform.position = position;
+                    obj.transform.rotation = rotation;
+                    obj.gameObject.SetActive(true);
+                    return obj;
+                }
+                else
+                {
+                    pool.Add(Instantiate(prefab, position, rotation, parent: objectsParent).GetComponent<T>());
+                    return pool[pool.Count - 1];
+                }
             }
 
             /// <summary>

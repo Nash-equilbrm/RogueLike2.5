@@ -20,7 +20,6 @@ namespace MyGame.PlayerControl
             {
                 _animator.SetBool("IsRunning", _runAnim);
             }
-            _character.localScale = new Vector3(_animDirection, 1f, 1f);
             UpdatePlayerHand(_hand1);
             UpdatePlayerHand(_hand2);
 
@@ -33,7 +32,15 @@ namespace MyGame.PlayerControl
             Vector2 playerToAimVector = _playerAimPos - playerScreenPos;
             float handEulerZ = Mathf.Atan2(playerToAimVector.y, playerToAimVector.x) * Mathf.Rad2Deg;
             Vector3 handEulers = hand.transform.eulerAngles;
-            hand.transform.eulerAngles = new Vector3(handEulers.x, handEulers.y, handEulerZ);
+            if (handEulerZ > 90f || handEulerZ < -90f)
+            {
+                transform.localScale = new Vector3(-1f, 1f, 1f);
+                hand.transform.eulerAngles = new Vector3(handEulers.x, handEulers.y, handEulerZ - 180);
+            }
+            else {
+                transform.localScale = Vector3.one;
+                hand.transform.eulerAngles = new Vector3(handEulers.x, handEulers.y, handEulerZ);
+            }
         }
     }
 }

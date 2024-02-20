@@ -15,58 +15,21 @@ public enum GameFlowState
 }
 
 public enum EventID
-{
-    // GUI
-    OpenMainMenu,
-    OnLanguageChange,
-    OnGameLoading,
-    OnBtnClick,
-
-
-    // MULTIPLAYER
-    OnConnectToServer,
-    OnConnectToServerSuccess,
-    OnCreateRoom,
-    OnJoinRoom,
-    OnJoinRoomSuccess,
-    OnJoinRoomFailed,
-    OnPlayerEnter,
-    SetPlayerID,
-    TimeUp,
-    OnPlayerLeft,
-
-
-    // GAMEPLAY
-    StartGamePlay,
-    EndGamePlay,
-    WonGame,
-    LostGame,
-    BackToMenu,
-    OnTimeChanged,
-    OnMapGenerate,
-    OnHeightChanged,
-    CameraShake,
-
-    //PLAYER
-    PlayerJump,
-    PlayerHitDart,
-    PlayerHitGround,
-    PlayerFlip,
-    DartHitDart,
-    StartSummonSkill,
-    SkillActive,
-
-
-    // AUDIO
-    StopAudio,
-    OnMusicVolumeChanged,
-    OnSFXVolumeChanged,
+{ 
+    PlayerTakeDamageFromEnemy,
+    PlayerTakeDamageFromBullet,
 
 }
-
-
 public enum LanguageId
 {
     VIE,
     ENG
+}
+
+public enum EnemyState
+{
+    Patrol,
+    ChasePlayer,
+    Attack,
+    Die
 }

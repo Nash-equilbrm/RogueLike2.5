@@ -22,8 +22,6 @@ namespace MyGame.Weapon
             var bulletPool = BulletPool.Instance.CreatePool(_bulletPrefab.name, _bulletPrefab);
             if (_totalBullet < 0) _totalBullet = 0;
             bulletPool.Prepare(_totalBullet + 10);
-
-            _currentBullet = _totalBullet;
         }
 
         protected virtual void Shoot(Vector3 position)

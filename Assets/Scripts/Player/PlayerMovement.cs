@@ -5,13 +5,14 @@ using UnityEngine;
 namespace MyGame.PlayerControl
 {
     // Only for player movement
-    public partial class Player : MonoBehaviour
+    public partial class Player
     {
         [Header("Player Movement")]
         [SerializeField] private float _moveSpeed = 1f;
 
 
         private Vector3 _currentVelocity = Vector3.zero;
+
 
         private void OnPlayerMove(Vector2 inputVector)
         {

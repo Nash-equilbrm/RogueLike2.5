@@ -12,7 +12,8 @@ namespace MyGame.Weapon
         protected BulletTrajectory _trajectory;
         [SerializeField] protected float _bulletSpeed;
         public float BulletSpeed { get => _bulletSpeed; }
-
+        [SerializeField] private float _existTime = 3f;
+        private float _existTimer = 0f;
         private Vector3 _targetPosition;
         public Vector3 TargetPosition { 
             get => _targetPosition; 
@@ -24,6 +25,7 @@ namespace MyGame.Weapon
 
 
         private bool _isMoving = false;
+
 
         public virtual void Initialize(BulletTrajectory trajectory)
         {
@@ -40,6 +42,8 @@ namespace MyGame.Weapon
         {
             _targetPosition = Vector3.zero;
             _trajectory?.ResetTrajectory();
+            _existTimer = 0;
+            transform.localPosition = Vector3.zero;
         }
 
         public virtual void Update()
@@ -47,6 +51,14 @@ namespace MyGame.Weapon
             if(_isMoving)
             {
                 _trajectory?.MoveBullet(this);
+            }
+            if(_existTimer >= _existTime)
+            {
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                _existTimer += Time.deltaTime;
             }
         }
 

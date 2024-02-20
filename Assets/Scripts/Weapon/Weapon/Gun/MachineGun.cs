@@ -13,10 +13,10 @@ namespace MyGame.Weapon
         private float _timer;
         private bool _isReloading;
 
-        protected override void Start()
+        private void Awake()
         {
-            base.Start();
-            _totalBullet = 20;
+            _totalBullet = 100;
+            _currentBullet = _totalBullet;
             _timer = _interval;
             _isReloading = false;
         }
@@ -49,7 +49,7 @@ namespace MyGame.Weapon
             return _currentBullet > 0;
         }
 
-        public override void Attack(Vector3 targetPos = default)
+        public override void Attack(Vector3 targetPos)
         {
             if (CanAttack())
             {

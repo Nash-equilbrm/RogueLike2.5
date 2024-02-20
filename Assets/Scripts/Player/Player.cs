@@ -16,20 +16,24 @@ namespace MyGame.PlayerControl
         private InputAction PlayerMovement { get => _gameInputActions.Player.PlayerMovement; }
         private InputAction PlayerAim { get => _gameInputActions.Player.PlayerAim; }
         private InputAction PlayerUseWeapon { get => _gameInputActions.Player.PlayerUseWeapon; }
+        [SerializeField] private Rigidbody _rb;
 
         private void Awake()
         {
             _gameInputActions = new GameInputActions();
+            InitHealth();
         }
 
         private void OnEnable()
         {
             EnablePlayerInput();
+            OnHealthEnable();
         }
 
         private void OnDisable()
         {
             DisablePlayerInput();
+            OnHealthDisable();
         }
 
         #region Input

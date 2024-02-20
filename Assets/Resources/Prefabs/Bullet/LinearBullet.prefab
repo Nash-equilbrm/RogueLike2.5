@@ -267,7 +267,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _collider: {fileID: 6851266219751425150}
+  _enemyLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
   _bulletSpeed: 50
+  _existTime: 3
   _trailRenderer: {fileID: 4810353525567083840}
 --- !u!54 &4717805973502978083
 Rigidbody:
