@@ -16,6 +16,8 @@ namespace MyGame.PlayerControl
         private InputAction PlayerMovement { get => _gameInputActions.Player.PlayerMovement; }
         private InputAction PlayerAim { get => _gameInputActions.Player.PlayerAim; }
         private InputAction PlayerUseWeapon { get => _gameInputActions.Player.PlayerUseWeapon; }
+        private InputAction PlayerDash { get => _gameInputActions.Player.PlayerDash; }
+
         [SerializeField] private Rigidbody _rb;
 
         private void Awake()
@@ -27,12 +29,14 @@ namespace MyGame.PlayerControl
         private void OnEnable()
         {
             EnablePlayerInput();
+            OnMovementEnable();
             OnHealthEnable();
         }
 
         private void OnDisable()
         {
             DisablePlayerInput();
+            OnMovementDisable();
             OnHealthDisable();
         }
 
@@ -42,30 +46,17 @@ namespace MyGame.PlayerControl
             _gameInputActions.Player.Enable();
 
             // movement
-            PlayerMovement.performed += Movement_performed;
-            PlayerMovement.canceled += Movement_canceled;
-
-            // aim
-            PlayerAim.performed += Aim_performed;
+            PlayerDash.performed += Dash_performed;
 
         }
 
 
-        private void Movement_canceled(InputAction.CallbackContext context)
+
+        private void Dash_performed(InputAction.CallbackContext context)
         {
-            OnPlayerMove(Vector2.zero);
+            OnPlayerDash();
         }
 
-        private void Movement_performed(InputAction.CallbackContext context)
-        {
-            Vector2 input = context.ReadValue<Vector2>();
-            OnPlayerMove(input);
-        }
-
-        private void Aim_performed(InputAction.CallbackContext context)
-        {
-            OnPlayerAim(context.ReadValue<Vector2>());
-        }
 
 
         private void DisablePlayerInput()
@@ -73,11 +64,7 @@ namespace MyGame.PlayerControl
             _gameInputActions.Player.Disable();
 
             // movement
-            PlayerMovement.performed -= Movement_performed;
-            PlayerMovement.canceled -= Movement_canceled;
-
-            // aim
-            PlayerAim.performed -= Aim_performed;
+            PlayerDash.performed -= Dash_performed;
 
         }
         #endregion
@@ -87,8 +74,14 @@ namespace MyGame.PlayerControl
         private void Update()
         {
             UpdateMovement();
+            UpdatePlayerAim();
             UpdateWeapon();
             UpdateAnimation();
+            UpdatePlayerHandRotation();
+        }
+
+        private void FixedUpdate()
+        {
         }
     }
 }

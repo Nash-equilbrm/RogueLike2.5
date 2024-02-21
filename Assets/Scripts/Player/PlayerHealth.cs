@@ -42,7 +42,6 @@ namespace MyGame.PlayerControl
             TakeDamage(1);
             // knock back effect
             Vector3 knockbackDirection = (transform.position - enemy.transform.position).normalized;
-            _rb.AddForce(knockbackDirection.normalized * _knockbackForce, ForceMode.Impulse);
             
         }
     }

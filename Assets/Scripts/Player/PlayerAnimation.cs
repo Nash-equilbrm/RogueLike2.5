@@ -12,17 +12,17 @@ namespace MyGame.PlayerControl
         [SerializeField] private Animator _animator;
         [SerializeField] private Transform _hand1;
         [SerializeField] private Transform _hand2;
+        public bool UpdateHandRotation { get; set; } = true;
+        public bool IsUpdateAnimation { get; set; } = true;
         private bool _runAnim = false;
         private int _animDirection = 1; // look at right side
         private void UpdateAnimation()
         {
-            if( _animator != null)
+            if(IsUpdateAnimation && _animator != null)
             {
                 _animator.SetBool("IsRunning", _runAnim);
             }
-            UpdatePlayerHand(_hand1);
-            UpdatePlayerHand(_hand2);
-
+            
         }
 
 
@@ -41,6 +41,15 @@ namespace MyGame.PlayerControl
                 transform.localScale = Vector3.one;
                 hand.transform.eulerAngles = new Vector3(handEulers.x, handEulers.y, handEulerZ);
             }
+        }
+        private void UpdatePlayerHandRotation()
+        {
+            if (UpdateHandRotation)
+            {
+                UpdatePlayerHand(_hand1);
+                UpdatePlayerHand(_hand2);
+            }
+          
         }
     }
 }

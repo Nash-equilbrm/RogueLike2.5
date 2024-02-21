@@ -40,7 +40,7 @@ namespace MyGame.Input
                 },
                 {
                     ""name"": ""PlayerAim"",
-                    ""type"": ""Value"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""ebe7a944-61e3-4350-b58a-9357fc530b91"",
                     ""expectedControlType"": """",
                     ""processors"": """",
@@ -55,6 +55,15 @@ namespace MyGame.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""PlayerDash"",
+                    ""type"": ""Button"",
+                    ""id"": ""82262b78-6404-47f9-a92a-af5a23394a4c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -134,6 +143,17 @@ namespace MyGame.Input
                     ""action"": ""PlayerUseWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""87efe772-d88d-4afb-8486-7c3fcccc8e7b"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlayerDash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -145,6 +165,7 @@ namespace MyGame.Input
             m_Player_PlayerMovement = m_Player.FindAction("PlayerMovement", throwIfNotFound: true);
             m_Player_PlayerAim = m_Player.FindAction("PlayerAim", throwIfNotFound: true);
             m_Player_PlayerUseWeapon = m_Player.FindAction("PlayerUseWeapon", throwIfNotFound: true);
+            m_Player_PlayerDash = m_Player.FindAction("PlayerDash", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -209,6 +230,7 @@ namespace MyGame.Input
         private readonly InputAction m_Player_PlayerMovement;
         private readonly InputAction m_Player_PlayerAim;
         private readonly InputAction m_Player_PlayerUseWeapon;
+        private readonly InputAction m_Player_PlayerDash;
         public struct PlayerActions
         {
             private @GameInputActions m_Wrapper;
@@ -216,6 +238,7 @@ namespace MyGame.Input
             public InputAction @PlayerMovement => m_Wrapper.m_Player_PlayerMovement;
             public InputAction @PlayerAim => m_Wrapper.m_Player_PlayerAim;
             public InputAction @PlayerUseWeapon => m_Wrapper.m_Player_PlayerUseWeapon;
+            public InputAction @PlayerDash => m_Wrapper.m_Player_PlayerDash;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -234,6 +257,9 @@ namespace MyGame.Input
                 @PlayerUseWeapon.started += instance.OnPlayerUseWeapon;
                 @PlayerUseWeapon.performed += instance.OnPlayerUseWeapon;
                 @PlayerUseWeapon.canceled += instance.OnPlayerUseWeapon;
+                @PlayerDash.started += instance.OnPlayerDash;
+                @PlayerDash.performed += instance.OnPlayerDash;
+                @PlayerDash.canceled += instance.OnPlayerDash;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -247,6 +273,9 @@ namespace MyGame.Input
                 @PlayerUseWeapon.started -= instance.OnPlayerUseWeapon;
                 @PlayerUseWeapon.performed -= instance.OnPlayerUseWeapon;
                 @PlayerUseWeapon.canceled -= instance.OnPlayerUseWeapon;
+                @PlayerDash.started -= instance.OnPlayerDash;
+                @PlayerDash.performed -= instance.OnPlayerDash;
+                @PlayerDash.canceled -= instance.OnPlayerDash;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -269,6 +298,7 @@ namespace MyGame.Input
             void OnPlayerMovement(InputAction.CallbackContext context);
             void OnPlayerAim(InputAction.CallbackContext context);
             void OnPlayerUseWeapon(InputAction.CallbackContext context);
+            void OnPlayerDash(InputAction.CallbackContext context);
         }
     }
 }
