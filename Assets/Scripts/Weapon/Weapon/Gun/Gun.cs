@@ -14,6 +14,7 @@ namespace MyGame.Weapon
     {
         [RequiredMember][SerializeField] protected Transform _firingTransform;
         [RequiredMember][SerializeField] protected GameObject _bulletPrefab;
+        [SerializeField] protected GameObject _muzzleFlash;
         [SerializeField] protected int _totalBullet;
         [SerializeField] protected int _currentBullet;
 
@@ -44,6 +45,19 @@ namespace MyGame.Weapon
 
         public virtual void OnReleased()
         {
+        }
+
+        public void PlayMuzzleFlash(float duration)
+        {
+            if(_muzzleFlash != null)
+                StartCoroutine(PlayeMuzzleFlashCoroutine(duration));
+        }
+
+        private IEnumerator PlayeMuzzleFlashCoroutine(float duration)
+        {
+            _muzzleFlash.SetActive(true);
+            yield return new WaitForSeconds(duration);
+            _muzzleFlash.SetActive(false);
         }
     }
 }

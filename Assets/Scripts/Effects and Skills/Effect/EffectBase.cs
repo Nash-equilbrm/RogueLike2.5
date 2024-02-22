@@ -5,13 +5,15 @@ using UnityEngine;
 
 namespace MyGame.Effects
 {
-    public abstract class Effect 
+    [System.Serializable]
+    public abstract class EffectBase 
     {
-        public float Duration { get; protected set; }
-        public float Amount { get; set; }
+        [SerializeField] protected float _duration;
+        public float Duration { get => _duration; }
+        [SerializeField] protected float _amount;
+        public float Amount { get => _amount; }
         protected float _timer = 0f;
         public bool IsApplying { get; private set; }
-
 
         protected IEnumerator ApplyEffectCoroutine(object target)
         {
@@ -54,6 +56,13 @@ namespace MyGame.Effects
             {
                 (target as MonoBehaviour).StartCoroutine(ApplyEffectCoroutine(target));
             }
+        }
+
+
+        public void SetParams(float duration, float amount)
+        {
+            _duration = duration;
+            _amount = amount;
         }
 
 

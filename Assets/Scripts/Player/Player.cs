@@ -18,8 +18,6 @@ namespace MyGame.PlayerControl
         private InputAction PlayerUseWeapon { get => _gameInputActions.Player.PlayerUseWeapon; }
         private InputAction PlayerDash { get => _gameInputActions.Player.PlayerDash; }
 
-        [SerializeField] private Rigidbody _rb;
-
         private void Awake()
         {
             _gameInputActions = new GameInputActions();

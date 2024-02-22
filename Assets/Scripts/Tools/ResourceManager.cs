@@ -29,28 +29,12 @@ namespace Tools
             }
 
             /// <summary>
-            /// Returns a game object from the pool. Instantiate a new one if none is available
+            /// Pop the first object from the pool and put it to the back of the queue/pool then returns it. Instantiate a new one if none is available
             /// </summary>
             /// <param name="position">Position of the object</param>
             /// <param name="rotation">Rotation of the object</param>
             public T Get(Vector3 position = default(Vector3), Quaternion rotation = default(Quaternion))
             {
-                //for (int i = 0; i < pool.Count; i++)
-                //{
-                //    if (!pool[i].gameObject.activeSelf)
-                //    {
-                //        pool[i].transform.position = position;
-                //        pool[i].transform.rotation = rotation;
-                //        pool[i].gameObject.SetActive(true);
-                //        var obj = pool[i];
-                //        pool.RemoveAt(i);
-                //        pool.Add(obj);
-                //        return obj;
-                //    }
-                //}
-
-                //pool.Add(Instantiate(prefab, position, rotation, parent: objectsParent).GetComponent<T>());
-                //return pool[pool.Count - 1];
                 if (!pool[0].gameObject.activeSelf)
                 {
                     var obj = pool[0];

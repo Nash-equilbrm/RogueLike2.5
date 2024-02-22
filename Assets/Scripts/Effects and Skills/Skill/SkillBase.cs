@@ -1,14 +1,14 @@
 using MyGame.Effects;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MyGame.Skill
 {
-    public abstract class Skill : Effect
+    [System.Serializable]
+    public abstract class SkillBase : EffectBase
     {
-        public float CoolDown { get; protected set; }
+        [SerializeField] protected float _coolDown;
+        public float CoolDown { get => _coolDown; }
         protected float _coolDownTimer = 0f;
         public bool CoolingDown { get; protected set; }
 
@@ -56,6 +56,12 @@ namespace MyGame.Skill
             {
                 (target as MonoBehaviour).StartCoroutine(ApplySkillCoroutine(target));
             }
+        }
+
+        public void SetParams(float duration, float amount, float coolDown)
+        {
+            SetParams(duration, amount);
+            _coolDown = coolDown;
         }
     }
 }

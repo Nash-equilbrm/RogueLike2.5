@@ -1,30 +1,34 @@
 using MyGame.PlayerControl;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
 namespace MyGame.Skill
 {
-    public class SkillDash : Skill
+    [System.Serializable]
+    public class SkillDash : SkillBase
     {
         public Vector3 Direction { get; set; }
-        private float _dashSpeed = 0f;
         public float DashSpeed {
             get
             {
-                return _dashSpeed;
+                return _amount;
             }
             set {
-                if(value < 0f) _dashSpeed = 0f;
-                else _dashSpeed = value;
+                if(value < 0f) _amount = 0f;
+                else _amount = value;
             }
+        }
+        public SkillDash()
+        {
         }
         public SkillDash(float duration, float dashSpeed, float coolDown)
         {
-            Duration = duration;
-            DashSpeed = dashSpeed;
-            CoolDown = coolDown;
+            _duration = duration;
+            _amount = dashSpeed;
+            _coolDown = coolDown;
         }
 
         protected override void OnBeginApplyEffect(object target)
@@ -32,7 +36,7 @@ namespace MyGame.Skill
             if (target != null)
             {
                 Player p = (Player)target;
-                Amount = DashSpeed;
+                _amount = DashSpeed;
                 p.CurrentVelocity = Direction * Amount * Time.deltaTime;
             }
         }

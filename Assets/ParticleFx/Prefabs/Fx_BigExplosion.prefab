@@ -4898,7 +4898,7 @@ GameObject:
   - component: {fileID: 19921400}
   - component: {fileID: 8232052}
   m_Layer: 0
-  m_Name: CompleteTankExplosion
+  m_Name: Fx_BigExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -35,6 +35,7 @@ namespace MyGame.Weapon
             {
                 var bullet = BulletPool.Instance.GetPool(_bulletPrefab.name).Get(position: _firingTransform.position, rotation: Quaternion.identity);
                 bullet.Shoot(position);
+                PlayMuzzleFlash(.2f);
                 _currentBullet--;
                 _timer = 0;
             }

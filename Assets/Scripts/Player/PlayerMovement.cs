@@ -13,8 +13,8 @@ namespace MyGame.PlayerControl
         [SerializeField] private CharacterController _movementController;
         [SerializeField] private float _moveSpeed = 1f;
         [SerializeField] private float _dashSpeed = 30f;
+        [SerializeField] private SkillDash _skillDash = null;
 
-        private SkillDash _skillDash;
 
         private Vector3 _currentVelocity = Vector3.zero;
         public Vector3 CurrentVelocity { get => _currentVelocity; set => _currentVelocity = value; }
@@ -40,7 +40,11 @@ namespace MyGame.PlayerControl
 
         private void OnMovementEnable()
         {
-            if (_skillDash == null) _skillDash = new SkillDash(duration: .1f, dashSpeed: _dashSpeed, coolDown: 1f);
+            if (_skillDash == null)
+            {
+                _skillDash = new SkillDash();
+            }
+            _skillDash.SetParams(duration: .1f, amount: _dashSpeed, coolDown: 1f);
         }
 
         private void OnMovementDisable()
@@ -71,7 +75,6 @@ namespace MyGame.PlayerControl
             {
                 _skillDash.Direction = AimDirection;
             }
-            _skillDash.DashSpeed = _dashSpeed;
             _skillDash.ApplySkill(this);
         }
 
