@@ -1,3 +1,4 @@
+using MyGame.Effects;
 using MyGame.PlayerControl;
 using System;
 using System.Collections;
@@ -11,14 +12,13 @@ namespace MyGame.Enemy
     public abstract partial class BaseEnemy : MonoBehaviour
     {
         [SerializeField] private Player _target;
-        public Player Target { get => _target; }
-
         private StateMachine<BaseEnemy> _stateMachine = new StateMachine<BaseEnemy>();
         private EnemyPatrolState _patrolState;
         private EnemyChasePlayerState _chasePlayerState;
         private EnemyAttackState _attackState;
         private EnemyDieState _dieState;
 
+        public Player Target { get => _target; }
 
         private void Awake()
         {
@@ -27,10 +27,20 @@ namespace MyGame.Enemy
             InitHealth();
         }
 
+        private void Start()
+        {
+            if (EnemyManager.HasInstance)
+            {
+                EnemyManager.Instance.Enemies.Add(this);
+            }
+        }
+
 
         void Update()
         {
             _stateMachine.CurrentState.LogicUpdate();
+            UpdateMovement();
+            UpdateEffects();
         }
 
         internal virtual void ResetEnemy()

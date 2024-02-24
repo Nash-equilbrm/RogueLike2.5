@@ -1,3 +1,5 @@
+using MyGame.Effects;
+using MyGame.Enemy;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -70,9 +72,29 @@ namespace MyGame.Weapon
             Debug.Log(other.name);
             if ((_enemyLayerMask.value & (1 << other.gameObject.layer)) > 0)
             {
-                Debug.Log("Hit enemy");
+                BaseEnemy enemy = null;
+                if (EnemyManager.HasInstance)
+                {
+                    foreach(var e in EnemyManager.Instance.Enemies)
+                    {
+                        if (other.gameObject.Equals(e.gameObject))
+                        {
+                            enemy = e;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    enemy = other.GetComponent<BaseEnemy>();
+                }
+                enemy.TakeDamage(10f);
+                var knockBackEffect = new EffectEnemyKnockBack();
+                knockBackEffect.SetParams(duration: .1f, amount: 20);
+                knockBackEffect.Direction = (enemy.transform.position - transform.position).normalized;
+                enemy.AddEffect(knockBackEffect);
             }
-            
+
         }
 
         private void OnDisable()

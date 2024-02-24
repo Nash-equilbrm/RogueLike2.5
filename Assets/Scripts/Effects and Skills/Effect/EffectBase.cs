@@ -9,11 +9,14 @@ namespace MyGame.Effects
     public abstract class EffectBase 
     {
         [SerializeField] protected float _duration;
-        public float Duration { get => _duration; }
         [SerializeField] protected float _amount;
-        public float Amount { get => _amount; }
+
         protected float _timer = 0f;
+        
+        public float Duration { get => _duration; }
+        public float Amount { get => _amount; }
         public bool IsApplying { get; private set; }
+        public bool IsDone { get; protected set; } = false;
 
         protected IEnumerator ApplyEffectCoroutine(object target)
         {

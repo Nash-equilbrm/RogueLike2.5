@@ -14,7 +14,6 @@ namespace MyGame.Skill
 
         protected IEnumerator ApplySkillCoroutine(object target)
         {
-            Debug.Log("ApplySkillCoroutine");
             yield return ApplyEffectCoroutine(target);
 
             // cool down
