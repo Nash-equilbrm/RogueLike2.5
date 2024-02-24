@@ -29,6 +29,7 @@ namespace MyGame.PlayerControl
             EnablePlayerInput();
             OnMovementEnable();
             OnHealthEnable();
+            OnWeaponEnable();
         }
 
         private void OnDisable()

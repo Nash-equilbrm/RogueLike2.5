@@ -11,10 +11,12 @@ namespace MyGame.Weapon
         [SerializeField] private LayerMask _enemyLayerMask;
         protected BulletTrajectory _trajectory;
         [SerializeField] protected float _bulletSpeed;
-        public float BulletSpeed { get => _bulletSpeed; }
         [SerializeField] private float _existTime = 3f;
         private float _existTimer = 0f;
         private Vector3 _targetPosition;
+
+
+        public float BulletSpeed { get => _bulletSpeed; set => _bulletSpeed = value; }
         public Vector3 TargetPosition { 
             get => _targetPosition; 
             set {
@@ -65,6 +67,7 @@ namespace MyGame.Weapon
         protected virtual void OnTriggerEnter(Collider other)
         {
             gameObject.SetActive(false);
+            Debug.Log(other.name);
             if ((_enemyLayerMask.value & (1 << other.gameObject.layer)) > 0)
             {
                 Debug.Log("Hit enemy");

@@ -11,6 +11,7 @@ namespace MyGame.PlayerControl
     public partial class Player
     {
         [Header("Weapon")]
+        [SerializeField] private Transform _primaryWeaponHolder;
         [SerializeField] private Gun _primaryWeapon;
         public bool IsUpdateWeapon { get; set; } = true;
         [Header("Player aim")]
@@ -25,7 +26,13 @@ namespace MyGame.PlayerControl
         private RaycastHit _hit;
         
 
-       
+       private void OnWeaponEnable()
+        {
+            if (_primaryWeapon == null)
+            {
+                _primaryWeapon = _primaryWeaponHolder.GetChild(0).GetComponent<Gun>();
+            }
+        }
 
         private void UpdatePlayerAim()
         {

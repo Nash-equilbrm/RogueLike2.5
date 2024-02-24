@@ -10,6 +10,8 @@ namespace MyGame.Weapon
     {
         [SerializeField] private float _reloadDuration = 2f;
         [SerializeField] private float _interval = 0.5f;
+        [SerializeField] private float _bulletSpeed = 100f;
+
         private float _timer;
         private bool _isReloading;
 
@@ -34,8 +36,8 @@ namespace MyGame.Weapon
             if (_timer >= _interval)
             {
                 var bullet = BulletPool.Instance.GetPool(_bulletPrefab.name).Get(position: _firingTransform.position, rotation: Quaternion.identity);
+                bullet.BulletSpeed = _bulletSpeed;
                 bullet.Shoot(position);
-                PlayMuzzleFlash(.2f);
                 _currentBullet--;
                 _timer = 0;
             }
@@ -55,6 +57,7 @@ namespace MyGame.Weapon
             if (CanAttack())
             {
                 Shoot(targetPos);
+                PlayMuzzleFlash();
             }
         }
 
@@ -67,6 +70,7 @@ namespace MyGame.Weapon
         private IEnumerator ResetWeaponCoroutine()
         {
             _isReloading = true;
+            _muzzleFlash?.SetActive(false);
             yield return new WaitForSeconds(_reloadDuration);
             ResetWeapon();
             _isReloading = false;
@@ -74,6 +78,7 @@ namespace MyGame.Weapon
 
         public override void OnReleased()
         {
+            base.OnReleased();
             _timer = _interval;
         }
     }

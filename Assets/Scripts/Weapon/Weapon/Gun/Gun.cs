@@ -45,19 +45,12 @@ namespace MyGame.Weapon
 
         public virtual void OnReleased()
         {
+            _muzzleFlash?.SetActive(false);
         }
 
-        public void PlayMuzzleFlash(float duration)
+        public void PlayMuzzleFlash()
         {
-            if(_muzzleFlash != null)
-                StartCoroutine(PlayeMuzzleFlashCoroutine(duration));
-        }
-
-        private IEnumerator PlayeMuzzleFlashCoroutine(float duration)
-        {
-            _muzzleFlash.SetActive(true);
-            yield return new WaitForSeconds(duration);
-            _muzzleFlash.SetActive(false);
+            _muzzleFlash?.SetActive(true);
         }
     }
 }

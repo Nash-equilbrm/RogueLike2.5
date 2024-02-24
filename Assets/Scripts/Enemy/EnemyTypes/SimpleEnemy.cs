@@ -14,6 +14,8 @@ namespace MyGame.Enemy
         [SerializeField] private float _speed;
         [SerializeField] private float _attackInterval = 0.5f;
         [SerializeField] private float _attackTimer;
+        [SerializeField] private CharacterController _controller;
+
 
 
         private void OnDrawGizmos()
@@ -62,7 +64,8 @@ namespace MyGame.Enemy
             {
                 transform.localScale = new Vector3(-1f, 1f, 1f);
             }
-            transform.Translate(direction * _speed * Time.deltaTime);
+            //transform.Translate(direction * _speed * Time.deltaTime);
+            _controller?.Move(direction * _speed * Time.deltaTime);
         }
 
         internal override void OnDeadUpdate()
