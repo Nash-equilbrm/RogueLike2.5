@@ -26,7 +26,7 @@ namespace MyGame.Enemy
         {
             if (_context.IsDead())
             {
-                _context.ChangeState(EnemyState.Die);
+                _context.FlowControl.ChangeState(EnemyState.Die);
             }
 
             if (_context.FindPlayer(_context.Target))
@@ -34,12 +34,12 @@ namespace MyGame.Enemy
                 _context.OnChasingPlayerUpdate(_context.Target);
                 if( _context.ReachPlayer(_context.Target) )
                 {
-                    _context.ChangeState(EnemyState.Attack);
+                    _context.FlowControl.ChangeState(EnemyState.Attack);
                 }
             }
             else
             {
-                _context.ChangeState(EnemyState.Patrol);
+                _context.FlowControl.ChangeState(EnemyState.Patrol);
             }
         }
     }

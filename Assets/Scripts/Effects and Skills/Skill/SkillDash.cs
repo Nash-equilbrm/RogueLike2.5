@@ -1,13 +1,11 @@
 using MyGame.PlayerControl;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
 
 
 namespace MyGame.Skill
 {
-    [System.Serializable]
+    [Serializable]
     public class SkillDash : SkillBase
     {
         public Vector3 Direction { get; set; }
@@ -35,7 +33,7 @@ namespace MyGame.Skill
         {
             if (target != null)
             {
-                Player p = (Player)target;
+                PlayerMovement p = (PlayerMovement)target;
                 _amount = DashSpeed;
                 p.CurrentVelocity = Direction * Amount * Time.deltaTime;
             }
@@ -45,7 +43,7 @@ namespace MyGame.Skill
         {
             if (target != null)
             {
-                Player p = (Player)target;
+                PlayerMovement p = (PlayerMovement)target;
                 p.CurrentVelocity = Vector3.zero;
             }
         }

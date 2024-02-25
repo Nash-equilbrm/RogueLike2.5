@@ -63,7 +63,7 @@ namespace MyGame.Enemy
             {
                 transform.localScale = new Vector3(-1f, 1f, 1f);
             }
-            CurrentVelocity = direction * _speed * Time.deltaTime;
+            Movement.CurrentVelocity = direction * _speed * Time.deltaTime;
         }
 
         internal override void OnDeadUpdate()
@@ -80,11 +80,6 @@ namespace MyGame.Enemy
         {
             if (p == null) return false;
             return Vector3.SqrMagnitude(p.transform.position - transform.position) <= _attackRange * _attackRange;
-        }
-
-        internal override void ResetEnemy()
-        {
-            base.ResetEnemy();
         }
 
         internal override void OnAttackStart()
@@ -105,7 +100,7 @@ namespace MyGame.Enemy
         internal override void OnChasingPlayerEnd()
         {
             _animator.SetBool("isMoving", false);
-            CurrentVelocity = Vector3.zero;
+            Movement.CurrentVelocity = Vector3.zero;
         }
 
         internal override void OnDeadStart()
@@ -128,17 +123,7 @@ namespace MyGame.Enemy
             base.OnPatrolEnd();
         }
         #endregion
-
-
-        public override void TakeDamage(float damage)
-        {
-            base.TakeDamage(damage);
-        }
-
-        protected override void DoAttack(Player p)
-        {
-            base.DoAttack(p);
-        }
+       
     }
 }
 

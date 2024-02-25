@@ -1,9 +1,5 @@
 using MyGame.Enemy;
-using MyGame.PlayerControl;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -35,28 +31,24 @@ namespace MyGame.Effects
             _amount = knockBackAmount;
         }
 
-        protected override void ApplyEffectOnce(object target)
+        protected override void OnBeginApplyEffect(object target)
         {
             if (target != null)
             {
                 BaseEnemy e = (BaseEnemy)target;
+                e.FlowControl.enabled = false;
                 _amount = KnockBackAmount;
-                e.CurrentVelocity = Direction * Amount * Time.deltaTime;
+                e.Movement.CurrentVelocity = Direction * Amount * Time.deltaTime;
             }
-        }
-
-        protected override void OnBeginApplyEffect(object target)
-        {
-            base.OnBeginApplyEffect(target);
         }
 
         protected override void OnEndApplyEffect(object target)
         {
-            base.OnEndApplyEffect(target);
             if (target != null)
             {
                 BaseEnemy e = (BaseEnemy)target;
-                e.CurrentVelocity = Vector3.zero;
+                e.FlowControl.enabled = true;
+                e.Movement.CurrentVelocity = Vector3.zero;
             }
             IsDone = true;
         }

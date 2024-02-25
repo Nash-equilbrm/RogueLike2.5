@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 namespace MyGame.Effects
 {
-    [System.Serializable]
+    [Serializable]
     public abstract class EffectBase 
     {
         [SerializeField] protected float _duration;
@@ -20,7 +21,6 @@ namespace MyGame.Effects
 
         protected IEnumerator ApplyEffectCoroutine(object target)
         {
-            Debug.Log("ApplyEffectCoroutine");
             if (target == null)
             {
                 yield break;
@@ -53,10 +53,18 @@ namespace MyGame.Effects
         {
         }
 
+        public virtual void Reset()
+        {
+            IsDone = false;
+            IsApplying = false;
+            _timer = 0f;
+        }
+
         public void ApplyEffect(object target)
         {
             if (!IsApplying)
             {
+                Reset();
                 (target as MonoBehaviour).StartCoroutine(ApplyEffectCoroutine(target));
             }
         }

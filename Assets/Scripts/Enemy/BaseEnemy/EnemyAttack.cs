@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace MyGame.Enemy
 {
-    public abstract partial class BaseEnemy
+    public class EnemyAttack: MonoBehaviour
     {
         protected virtual void DoAttack(Player p)
         {

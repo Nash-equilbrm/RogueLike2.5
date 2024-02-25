@@ -5,12 +5,12 @@ using UnityEngine;
 
 namespace MyGame.Enemy
 {
-    public abstract partial class BaseEnemy
+    public class EnemyHealth: MonoBehaviour
     {
         [Header("Health")]
         [SerializeField] private float _totalHp;
         [SerializeField] private float _currentHp;
-
+        public float CurrentHp { get => _currentHp; }
 
         private void InitHealth()
         {

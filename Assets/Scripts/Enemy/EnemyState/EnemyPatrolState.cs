@@ -26,13 +26,13 @@ namespace MyGame.Enemy
         {
             if (_context.IsDead())
             {
-                _context.ChangeState(EnemyState.Die);
+                _context.FlowControl.ChangeState(EnemyState.Die);
             }
 
             _context.OnPatrolUpdate();
             if (_context.FindPlayer(_context.Target))
             {
-                _context.ChangeState(EnemyState.ChasePlayer);
+                _context.FlowControl.ChangeState(EnemyState.ChasePlayer);
             }
         }
     }

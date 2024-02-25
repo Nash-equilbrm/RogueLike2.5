@@ -8,7 +8,7 @@ namespace MyGame.Weapon
 {
     public abstract class BulletTrajectory
     {
-        //public Vector3 
+        public Vector3 CurrentDirection { get; set; }
         public abstract void MoveBullet(Bullet bullet);
         public abstract void ResetTrajectory();
     }

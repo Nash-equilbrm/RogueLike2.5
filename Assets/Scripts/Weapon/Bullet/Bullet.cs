@@ -68,8 +68,6 @@ namespace MyGame.Weapon
 
         protected virtual void OnTriggerEnter(Collider other)
         {
-            gameObject.SetActive(false);
-            Debug.Log(other.name);
             if ((_enemyLayerMask.value & (1 << other.gameObject.layer)) > 0)
             {
                 BaseEnemy enemy = null;
@@ -88,13 +86,13 @@ namespace MyGame.Weapon
                 {
                     enemy = other.GetComponent<BaseEnemy>();
                 }
-                enemy.TakeDamage(10f);
-                var knockBackEffect = new EffectEnemyKnockBack();
-                knockBackEffect.SetParams(duration: .1f, amount: 20);
-                knockBackEffect.Direction = (enemy.transform.position - transform.position).normalized;
-                enemy.AddEffect(knockBackEffect);
+                enemy.Health.TakeDamage(10f);
+                EffectEnemyKnockBack knockBackEffect = (EffectEnemyKnockBack) enemy.EffectManager.GetEffect(typeof(EffectEnemyKnockBack));
+                knockBackEffect.SetParams(duration: .1f, amount: 5);
+                knockBackEffect.Direction = _trajectory.CurrentDirection;
+                knockBackEffect.ApplyEffect(enemy);
+                gameObject.SetActive(false);
             }
-
         }
 
         private void OnDisable()

@@ -7,12 +7,11 @@ using UnityEngine.EventSystems;
 
 namespace MyGame.PlayerControl
 {
-    public partial class Player
+    public class PlayerHealth: MonoBehaviour
     {
-        [Header("Player Health")]
+        [Header("=====Player Health=====")]
         [SerializeField] private float _totalHp;
         [SerializeField] private float _currentHp;
-        [SerializeField] private float _knockbackForce = 5f;
 
         private void InitHealth()
         {
@@ -41,8 +40,6 @@ namespace MyGame.PlayerControl
             BaseEnemy enemy = (BaseEnemy)data;
             TakeDamage(1);
             // knock back effect
-            Vector3 knockbackDirection = (transform.position - enemy.transform.position).normalized;
-            
         }
     }
 

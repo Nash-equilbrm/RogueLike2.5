@@ -5,20 +5,19 @@ using UnityEngine;
 
 public class BulletLinearTrajectory : BulletTrajectory
 {
-    private Vector3 _targetDirection = Vector3.zero;
     public override void MoveBullet(Bullet bullet)
     {
-        if (_targetDirection.Equals(Vector3.zero))
+        if (CurrentDirection.Equals(Vector3.zero))
         {
-            _targetDirection = (bullet.TargetPosition - bullet.transform.position);
-            _targetDirection.y = 0f;
-            _targetDirection.Normalize();
+            CurrentDirection = (bullet.TargetPosition - bullet.transform.position);
+            CurrentDirection = Vector3.Scale(CurrentDirection, new Vector3(1f, 0f, 1f));
+            CurrentDirection = CurrentDirection.normalized;
         }
-        bullet.transform.Translate(_targetDirection * bullet.BulletSpeed * Time.deltaTime);
+        bullet.transform.Translate(CurrentDirection * bullet.BulletSpeed * Time.deltaTime);
     }
 
     public override void ResetTrajectory()
     {
-        _targetDirection = Vector3.zero;
+        CurrentDirection = Vector3.zero;
     }
 }
